@@ -1,0 +1,12 @@
+[default]
+use_short_url = true
+
+[development]
+debug = true            # true | false
+log_level = 'DEBUG'     # DEBUG | INFO
+DJANGO_DEBUG = true
+
+[production]
+debug = false
+log_level = 'INFO'      # DEBUG | INFO
+DJANGO_DEBUG = false
