@@ -3,6 +3,7 @@ from dynaconf import Dynaconf
 from pydantic_settings import BaseSettings
 from typing import List
 
+import logging
 
 class Settings(BaseSettings):
     env_name: str
@@ -27,7 +28,7 @@ def get_settings() -> Settings:
     )
 
     result = Settings(
-        env_name=dynaconf_settings.get("env_name", "production"),
+        env_name=dynaconf_settings.get("ENV_FOR_DYNACONF", "production"),
         debug=dynaconf_settings.get("debug", False),
         log_level=dynaconf_settings.get("log_level", 'INFO'),
         DJANGO_DEBUG=dynaconf_settings.get("DJANGO_DEBUG", False),
@@ -35,12 +36,30 @@ def get_settings() -> Settings:
         DJANGO_ALLOWED_HOSTS=dynaconf_settings.get("DJANGO_ALLOWED_HOSTS", ['!There is no DJANGO_ALLOWED_HOSTS in settings files! Check it!'])
     )
 
-    print(f'Loading settings for: {result.env_name}')
-    print(f'  debug: {result.debug}')
-    print(f'  log_level: {result.log_level}')
-    print(f'  DJANGO_DEBUG: {result.DJANGO_DEBUG}')
-    print(f'  DJANGO_SECRET_KEY: {result.DJANGO_SECRET_KEY}')
-    print(f'  DJANGO_ALLOWED_HOSTS: {result.DJANGO_ALLOWED_HOSTS}')
+    log_format = '[%(name)s] %(levelname)s: %(message)s' if result.env_name != 'production' else '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+    logging.basicConfig(
+        format=log_format,
+        datefmt='%d-%b-%y %H:%M:%S',
+        level=getattr(logging, result.log_level.upper(), logging.INFO)
+    )
+
+    logger = logging.getLogger(__name__)
+
+    logger.info(f'Loading settings for: {result.env_name}')
+    logger.info(f'  debug: {result.debug}')
+    logger.info(f'  log_level: {result.log_level}')
+    logger.debug(f'  DJANGO_DEBUG: {result.DJANGO_DEBUG}')
+    logger.debug(f'  DJANGO_SECRET_KEY: {result.DJANGO_SECRET_KEY}')
+    logger.debug(f'  DJANGO_ALLOWED_HOSTS: {result.DJANGO_ALLOWED_HOSTS}')
+
+    # print(f'Loading settings for: {result.env_name}')
+    # print(f'  debug: {result.debug}')
+    # print(f'  log_level: {result.log_level}')
+    # print(f'  DJANGO_DEBUG: {result.DJANGO_DEBUG}')
+    # print(f'  DJANGO_SECRET_KEY: {result.DJANGO_SECRET_KEY}')
+    # print(f'  DJANGO_ALLOWED_HOSTS: {result.DJANGO_ALLOWED_HOSTS}')
+
+    logger.setLevel(result.log_level)
 
     return result
 
