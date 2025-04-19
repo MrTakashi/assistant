@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+from config import get_settings
+
+settings = get_settings()
 
 from pathlib import Path
 
@@ -20,12 +23,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^hx9un=v9z%+y)otuq5s@7hxerp#2(y@w#6f24yum_xu9i7^o&"
+SECRET_KEY = settings.DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings.DJANGO_DEBUG
 
-ALLOWED_HOSTS = []
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True  # CSRF cookie only over HTTPS
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000  # Enables HTTP Strict Transport Security (1 year)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+
+ALLOWED_HOSTS = settings.DJANGO_ALLOWED_HOSTS
 
 
 # Application definition

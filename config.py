@@ -49,7 +49,7 @@ def get_settings() -> Settings:
     logger.info(f'  debug: {result.debug}')
     logger.info(f'  log_level: {result.log_level}')
     logger.info(f'  DJANGO_DEBUG: {result.DJANGO_DEBUG}')
-    logger.info(f'  DJANGO_SECRET_KEY: {result.DJANGO_SECRET_KEY}')
+    # logger.info(f'  DJANGO_SECRET_KEY: {result.DJANGO_SECRET_KEY}')
     logger.info(f'  DJANGO_ALLOWED_HOSTS: {result.DJANGO_ALLOWED_HOSTS}')
 
     # print(f'Loading settings for: {result.env_name}')
