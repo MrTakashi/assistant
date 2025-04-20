@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     DJANGO_SECRET_KEY: str
     DJANGO_ALLOWED_HOSTS: List[str] = []
 
+    OPENAI_API_KEY: str
+
 @lru_cache()
 def get_settings() -> Settings:
     dynaconf_settings = Dynaconf(
@@ -33,7 +35,9 @@ def get_settings() -> Settings:
         log_level=dynaconf_settings.get("log_level", 'INFO'),
         DJANGO_DEBUG=dynaconf_settings.get("DJANGO_DEBUG", False),
         DJANGO_SECRET_KEY=dynaconf_settings.get("DJANGO_SECRET_KEY", '!There is no DJANGO_SECRET_KEY in settings files! Check it!'),
-        DJANGO_ALLOWED_HOSTS=dynaconf_settings.get("DJANGO_ALLOWED_HOSTS", ['!There is no DJANGO_ALLOWED_HOSTS in settings files! Check it!'])
+        DJANGO_ALLOWED_HOSTS=dynaconf_settings.get("DJANGO_ALLOWED_HOSTS", ['!There is no DJANGO_ALLOWED_HOSTS in settings files! Check it!']),
+        OPENAI_API_KEY=dynaconf_settings.get("OPENAI_API_KEY", ['!There is no OPENAI_API_KEY in settings files! Check it!'])
+
     )
 
     log_format = '[%(name)s] %(levelname)s: %(message)s' if result.env_name != 'production' else '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
