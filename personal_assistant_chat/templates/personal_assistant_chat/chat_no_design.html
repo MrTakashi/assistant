@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Simple Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        #chat-box { border: 1px solid #ccc; padding: 20px; width: 400px; min-height: 200px; }
+        textarea { width: 100%; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>ChatGPT (gpt-4.1-nano)</h2>
+    <div id="chat-box">
+        {% if response %}
+            <div><strong>Bot:</strong> {{ response }}</div>
+        {% endif %}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="user_input" rows="3" placeholder="Type your message..."></textarea><br>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

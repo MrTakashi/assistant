@@ -17,8 +17,8 @@ for _ in range(3):  # Try up to 3 times
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "What's the capital of France?"}
-            ]
+                {"role": "user", "content": "What's the capital of France?"},
+            ],
         )
         print(response.choices[0].message.content)
         break

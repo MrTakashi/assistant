@@ -1,0 +1,17 @@
+TOPICS = [
+    {"example": "Что ты умеешь?", "icon": "fas fa-comment-dots", "name": "Просто поболтать"},
+    {"example": "Где сегодня специальные предложения на меню?", "icon": "fa-solid fa-utensils", "name": "Рестораны и кафе"},
+    {"example": "Можешь помочь с физикой?", "icon": "fas fa-book", "name": "Домашнее задание"},
+    {"example": "Расскажи анекдот про Штирлица", "icon": "far fa-face-smile-wink", "name": "Рассмеши"},
+    {"example": "Какие встречи сегодня?", "icon": "fas fa-calendar-alt", "name": "Мой календарь"},
+    {"example": "Посоветуй новый альбом", "icon": "fas fa-music", "name": "Музыка"},
+    {"example": "Куда поехать в мае?", "icon": "fas fa-plane", "name": "Путешествия"},
+    {"example": "Программа тренировок", "icon": "fas fa-running", "name": "Спорт"},
+    {"example": "Лучший ноутбук 2025", "icon": "fas fa-microchip", "name": "Технологии"},
+    {"example": "Кто такой Кандинский?", "icon": "fas fa-palette", "name": "Искусство"},
+    {"example": "Как снимать портреты?", "icon": "fas fa-camera", "name": "Фотография"},
+    {"example": "Что посмотреть вечером?", "icon": "fas fa-film", "name": "Кино"},
+    {"example": "Книги похожие на...", "icon": "fas fa-book-open", "name": "Литература"},
+    {"example": "Тренды весны 2025", "icon": "fas fa-tshirt", "name": "Мода"},
+    {"example": "Как выбрать авто?", "icon": "fas fa-car", "name": "Автомобили"},
+]

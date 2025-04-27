@@ -5,6 +5,7 @@ from typing import List
 
 import logging
 
+
 class Settings(BaseSettings):
     env_name: str
     debug: bool
@@ -15,13 +16,15 @@ class Settings(BaseSettings):
     DJANGO_ALLOWED_HOSTS: List[str] = []
 
     OPENAI_API_KEY: str
+    PROXYAPI_KEY: str
+
 
 @lru_cache()
 def get_settings() -> Settings:
     dynaconf_settings = Dynaconf(
         settings_files=[
-            'config/.secrets.toml',
-            'config/settings.toml',
+            "config/.secrets.toml",
+            "config/settings.toml",
         ],
         environments=True,
         load_dotenv=False,
@@ -32,29 +35,45 @@ def get_settings() -> Settings:
     result = Settings(
         env_name=dynaconf_settings.get("ENV_FOR_DYNACONF", "production"),
         debug=dynaconf_settings.get("debug", False),
-        log_level=dynaconf_settings.get("log_level", 'INFO'),
+        log_level=dynaconf_settings.get("log_level", "INFO"),
         DJANGO_DEBUG=dynaconf_settings.get("DJANGO_DEBUG", False),
-        DJANGO_SECRET_KEY=dynaconf_settings.get("DJANGO_SECRET_KEY", '!There is no DJANGO_SECRET_KEY in settings files! Check it!'),
-        DJANGO_ALLOWED_HOSTS=dynaconf_settings.get("DJANGO_ALLOWED_HOSTS", ['!There is no DJANGO_ALLOWED_HOSTS in settings files! Check it!']),
-        OPENAI_API_KEY=dynaconf_settings.get("OPENAI_API_KEY", ['!There is no OPENAI_API_KEY in settings files! Check it!'])
-
+        DJANGO_SECRET_KEY=dynaconf_settings.get(
+            "DJANGO_SECRET_KEY",
+            "!There is no DJANGO_SECRET_KEY in settings files! Check it!",
+        ),
+        DJANGO_ALLOWED_HOSTS=dynaconf_settings.get(
+            "DJANGO_ALLOWED_HOSTS",
+            ["!There is no DJANGO_ALLOWED_HOSTS in settings files! Check it!"],
+        ),
+        OPENAI_API_KEY=dynaconf_settings.get(
+            "OPENAI_API_KEY",
+            ["!There is no OPENAI_API_KEY in settings files! Check it!"],
+        ),
+        PROXYAPI_KEY=dynaconf_settings.get(
+            "PROXYAPI_KEY",
+            ["!There is no PROXYAPI_KEY in settings files! Check it!"],
+        ),
     )
 
-    log_format = '[%(name)s] %(levelname)s: %(message)s' if result.env_name != 'production' else '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+    log_format = (
+        "[%(name)s] %(levelname)s: %(message)s"
+        if result.env_name != "production"
+        else "%(asctime)s [%(name)s] %(levelname)s: %(message)s"
+    )
     logging.basicConfig(
         format=log_format,
-        datefmt='%d-%b-%y %H:%M:%S',
-        level=getattr(logging, result.log_level.upper(), logging.INFO)
+        datefmt="%d-%b-%y %H:%M:%S",
+        level=getattr(logging, result.log_level.upper(), logging.INFO),
     )
 
     logger = logging.getLogger(__name__)
 
-    logger.info(f'Loading settings for: {result.env_name}')
-    logger.info(f'  debug: {result.debug}')
-    logger.info(f'  log_level: {result.log_level}')
-    logger.info(f'  DJANGO_DEBUG: {result.DJANGO_DEBUG}')
+    logger.info(f"Loading settings for: {result.env_name}")
+    logger.info(f"  debug: {result.debug}")
+    logger.info(f"  log_level: {result.log_level}")
+    logger.info(f"  DJANGO_DEBUG: {result.DJANGO_DEBUG}")
     # logger.info(f'  DJANGO_SECRET_KEY: {result.DJANGO_SECRET_KEY}')
-    logger.info(f'  DJANGO_ALLOWED_HOSTS: {result.DJANGO_ALLOWED_HOSTS}')
+    logger.info(f"  DJANGO_ALLOWED_HOSTS: {result.DJANGO_ALLOWED_HOSTS}")
 
     # print(f'Loading settings for: {result.env_name}')
     # print(f'  debug: {result.debug}')
@@ -67,5 +86,6 @@ def get_settings() -> Settings:
 
     return result
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     settings = get_settings()
