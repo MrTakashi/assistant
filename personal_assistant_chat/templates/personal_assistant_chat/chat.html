@@ -7,42 +7,51 @@
     <title>Ваш ассистент</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link type="text/css" href="{% static 'personal_assistant_chat/css/style.css'%}" rel="stylesheet">
+<!--    <link type="text/css" href="{% static 'personal_assistant_chat/css/topics.css'%}" rel="stylesheet">-->
 </head>
 <body>
 
-    <div class="header">
-        <div class="account-info">
-            <div class="account-logo">MK</div>
-            <div id="accountPanel" class="account-panel">
-                <p>Панель аккаунта</p>
-            </div>
-        </div>
-
-        <div class="service-logo">
-            Ваш ассистент
+<div class="header">
+    <div class="account-info">
+        <div class="account-logo">MK</div>
+        <div id="accountPanel" class="account-panel">
+            <p>Панель аккаунта</p>
         </div>
     </div>
 
-    <div class="main-text">
-        Чем я могу помочь?
+    <div class="service-logo">
+        Ваш ассистент
     </div>
+</div>
 
 <div class="topics-container">
-        <div class="topics-scroll" id="topicsScroll">
-            {% for topic in topics %}
-                <div class="topic" data-example="{{ topic.example }}">
-                    <div class="topic-icon"><i class="{{ topic.icon }}"></i></div>
-                    <div class="topic-name">{{ topic.name }}</div>
-                </div>
-            {% endfor %}
+    <div class="topics-scroll" id="topicsScroll">
+        {% for topic in topics %}
+            <div class="topic" data-example="{{ topic.example }}">
+                <div class="topic-icon"><i class="{{ topic.icon }}"></i></div>
+                <div class="topic-name">{{ topic.name }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="chat-container">
+    {% if response %}
+        <div class="message assistant-message">
+            {{ response }}
         </div>
-    </div>
-    <div class="input-container">
-        <input type="text" class="input-field" id="userInput" placeholder="Спросите что угодно...">
-        <button class="send-button">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
+    {% endif %}
+</div>
+
+<form method="post">
+{% csrf_token %}
+<div class="input-container">
+    <input type="text" name="user_input" class="input-field" id="userInput" placeholder="Чем я могу помочь?">
+    <button class="send-button">
+        <i class="fas fa-paper-plane"></i>
+    </button>
+</div>
+</form>
 
 <script src="{% static 'personal_assistant_chat/js/script.js'%}"></script>
 
