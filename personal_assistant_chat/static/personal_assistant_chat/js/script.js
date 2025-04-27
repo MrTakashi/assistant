@@ -10,3 +10,13 @@ document.querySelectorAll('.topic').forEach(topic => {
 document.querySelector('.account-logo').addEventListener('click', function() {
     document.getElementById('accountPanel').classList.toggle('show');
 });
+
+const input = document.querySelector('.input-field');
+
+document.querySelectorAll('.topic').forEach(topic => {
+  topic.addEventListener('click', () => {
+    input.focus({ preventScroll: true });
+    // здесь можно дополнительно обработать логику клика по теме
+  });
+});
+

@@ -45,7 +45,7 @@ def home(request):
 
 
     return render(
-        request,"personal_assistant_chat/chat.html", context)
+        request,"personal_assistant_chat/ai.html", context)
 
 
 @csrf_exempt
